@@ -1,0 +1,38 @@
+# Theme
+remote_theme: 'epidrome/cover-card'
+
+# Title and tag line
+title: 'Vikas Yadav'
+description: 'Software Engineer'
+
+# Images
+avatar: 'profilepic.jpg'
+background: 'background.jpg'
+favicon: 'favicon.ico'
+
+# Online profiles
+#facebook: ''
+twitter: 'donvikas'
+linkedin: 'vikasuperman'
+instagram: 'coder_panda'
+#pinterest: ''
+#youtube: ''
+github-user: 'vikaskyadav'
+gitlab-user: 'vikasharry03'
+#codepen: ''
+#steam: ''
+#soundcloud: ''
+#lastfm: ''
+stack-overflow: '4778809/vikas-yadav'
+#reddit: ''
+medium:  'vikasharry03'
+#tumblr: ''
+#weibo: ''
+#vk: ''
+blog_url: 'http://vikaskyadav.github.io/blog/'
+email: 'vikasharry03@gmail.com'
+#messenger: ''
+
+# Advanced settings
+plugins:
+  - jekyll-remote-theme
