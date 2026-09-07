@@ -1,4 +1,4 @@
-# Cover Card landing page theme
+# Cover Card jekyll theme
 
 ## Quick set-up
 
@@ -77,3 +77,4 @@ You can find and locally overide advanced options (e.g., font, image, and icon s
 This page is based on the [cover-card jekyll remote theme](https://github.com/epidrome/cover-card/tree/master).
 
 Background photo by Anders Jildén and avatar photo by Ayo Ogunseinde, both on [Unsplash](https://unsplash.com/)
+
