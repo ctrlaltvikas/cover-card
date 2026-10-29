@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Vikas Kumar Yadav | 3D Holographic Cover Card</title>
+  
+  <meta name="description" content="Immersive 3D physics-based holographic cover card and interactive portfolio for Vikas Kumar Yadav." />
+  <meta name="theme-color" content="#07090e" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+  <!-- OpenGraph / Social Preview -->
+  <meta property="og:title" content="Vikas Kumar Yadav | 3D Holographic Cover Card" />
+  <meta property="og:description" content="Interactive 3D spatial cover card with real-time physics, holographic foil sheen, and gyro tracking." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="avatar.jpg" />
+
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+
+  <!-- High-Performance Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body data-theme="prism">
+
+  <!-- Interactive 3D Background Canvas -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="bg-vignette"></div>
+
+  <!-- Primary Spatial Viewport -->
+  <main class="viewport" role="main">
+
+    <!-- 3D Scene Rigid-Body Rig -->
+    <div class="card-scene" id="card-scene" aria-label="Interactive 3D Profile Card">
+      <div class="card-3d" id="card-3d">
+
+        <!-- ================= FRONT FACE ================= -->
+        <div class="card-face card-front">
+          <div class="card-pattern"></div>
+          <div class="card-hologram"></div>
+          <div class="card-glare"></div>
+
+          <!-- Top Status Bar -->
+          <div class="card-header-bar">
+            <div class="status-badge">
+              <span class="status-beacon"></span>
+              <span>Available</span>
+            </div>
+            <div class="pass-id-chip" id="pass-id-chip">CC-VK-9021</div>
+          </div>
+
+          <!-- Glowing 3D Avatar -->
+          <div class="avatar-showcase">
+            <div class="avatar-ring"></div>
+            <div class="avatar-image-frame">
+              <img id="card-avatar" src="avatar.jpg" alt="Vikas Kumar Yadav" class="avatar-image" />
+            </div>
+            <div class="avatar-verified-badge" title="Verified Creator">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Profile Metadata -->
+          <div class="profile-meta">
+            <h1 id="profile-name" class="profile-name">Vikas Kumar Yadav</h1>
+            <div id="profile-role" class="profile-role">Creative Technologist & Full-Stack Engineer</div>
+            <p id="profile-bio" class="profile-bio">
+              Crafting mind-bending digital experiences at the nexus of <span class="highlight">interactive 3D physics</span>, <span class="highlight">spatial UI/UX</span>, and <span class="highlight">high-performance code</span>.
+            </p>
+          </div>
+
+          <!-- Social Shelf -->
+          <div class="social-shelf" id="social-shelf">
+            <!-- Dynamically populated from config.js -->
+          </div>
+
+          <!-- Bottom Action Bar -->
+          <div class="card-bottom-actions">
+            <button class="action-copy-email" id="btn-copy-email" title="Copy Email">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+              <span>Copy Email</span>
+            </button>
+
+            <button class="action-flip-btn trigger-flip" title="Flip to Back View (Space)">
+              <span>Flip Pass</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- ================= BACK FACE ================= -->
+        <div class="card-face card-back">
+          <div class="card-pattern"></div>
+          <div class="card-hologram"></div>
+          <div class="card-glare"></div>
+
+          <!-- Back Header -->
+          <div class="back-header">
+            <div class="back-title-group">
+              <div class="back-badge-title" id="back-pass-title">VIKAS • VIP PASS</div>
+              <div class="back-edition" id="back-edition">HOLOGRAM EDITION 2026</div>
+            </div>
+            <div class="status-badge" style="background: rgba(168, 85, 247, 0.15); border-color: rgba(168, 85, 247, 0.4); color: #c084fc;">
+              AUTHENTIC
+            </div>
+          </div>
+
+          <!-- Holographic QR Code Box -->
+          <div class="qr-hologram-box">
+            <div class="qr-canvas-wrap" id="qr-canvas-wrap">
+              <!-- Dynamically populated from app.js -->
+            </div>
+            <div class="qr-label">Scan to Connect Profile</div>
+          </div>
+
+          <!-- Interactive Skills Matrix -->
+          <div class="skills-matrix" id="skills-matrix">
+            <!-- Dynamically populated from config.js -->
+          </div>
+
+          <!-- Live Telemetry / Local Clock -->
+          <div class="system-telemetry">
+            <div class="telemetry-item">
+              <div class="telemetry-label">EXPERIENCE</div>
+              <div class="telemetry-val">7+ YRS</div>
+            </div>
+            <div class="telemetry-item">
+              <div class="telemetry-label">LOCAL TIME</div>
+              <div class="telemetry-val" id="live-clock">00:00:00</div>
+            </div>
+            <div class="telemetry-item">
+              <div class="telemetry-label">SIGNAL</div>
+              <div class="telemetry-val" style="color: #34d399;">ONLINE</div>
+            </div>
+          </div>
+
+          <!-- Back Bottom Actions -->
+          <div class="back-bottom-actions">
+            <button class="btn-vcard" id="btn-download-vcard" title="Download Contact Card">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="18" rx="2"></rect>
+                <path d="M8 7h.01M12 7h4M8 11h8M8 15h5"></path>
+              </svg>
+              <span>Save Contact</span>
+            </button>
+
+            <button class="action-flip-btn trigger-flip" title="Flip to Front View (Space)">
+              <span>Front View</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Floating Glass HUD Dock -->
+    <nav class="hud-dock" aria-label="Card Controls">
+      <button class="hud-btn" id="hud-btn-sound" title="Toggle 3D Audio FX (M)">
+        <!-- Injected via app.js -->
+      </button>
+
+      <div class="hud-divider"></div>
+
+      <!-- Color Theme Swatches -->
+      <div class="theme-swatch-list" id="theme-swatch-list">
+        <!-- Injected via app.js -->
+      </div>
+
+      <div class="hud-divider"></div>
+
+      <button class="hud-btn" id="hud-btn-flip" title="Flip Card (Space / F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+        </svg>
+      </button>
+
+      <button class="hud-btn" id="hud-btn-gyro" title="Enable Mobile Gyroscope">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+        </svg>
+      </button>
+
+      <button class="hud-btn" id="hud-btn-share" title="Share Link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+          <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Floating Toast Feedback -->
+    <div class="toast-notice" id="toast-notice" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+      <span class="toast-msg">Copied!</span>
+    </div>
+
+  </main>
+
+  <!-- Application Logic Modules -->
+  <script src="js/config.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/physics.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

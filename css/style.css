@@ -1,0 +1,902 @@
+/* ==========================================================================
+   Cover Card 3D - Modern Physics & Holographic Spatial Experience
+   ========================================================================== */
+
+:root {
+  --bg-space: #07090e;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  /* Theme active variables (defaults to Cyber Prism) */
+  --theme-accent: #a855f7;
+  --theme-accent2: #38bdf8;
+  --theme-glow: rgba(168, 85, 247, 0.35);
+  --theme-border: rgba(168, 85, 247, 0.25);
+
+  /* Card Geometry */
+  --card-width: clamp(320px, 92vw, 420px);
+  --card-height: clamp(560px, 80vh, 650px);
+  --card-radius: 28px;
+
+  /* Physics Dynamic Variables (Updated continuously by physics.js) */
+  --rot-x: 0deg;
+  --rot-y: 0deg;
+  --trans-z: 0px;
+  --light-x: 50%;
+  --light-y: 50%;
+  --holo-angle: 135deg;
+  --holo-x: 50%;
+  --holo-y: 50%;
+  --shadow-x: 0px;
+  --shadow-y: 25px;
+  --shadow-blur: 40px;
+
+  /* Font Stack */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+/* Theme presets */
+body[data-theme="solaris"] {
+  --theme-accent: #f59e0b;
+  --theme-accent2: #fbbf24;
+  --theme-glow: rgba(245, 158, 11, 0.35);
+  --theme-border: rgba(245, 158, 11, 0.3);
+}
+
+body[data-theme="borealis"] {
+  --theme-accent: #10b981;
+  --theme-accent2: #06b6d4;
+  --theme-glow: rgba(16, 185, 129, 0.35);
+  --theme-border: rgba(16, 185, 129, 0.3);
+}
+
+body[data-theme="stealth"] {
+  --theme-accent: #e2e8f0;
+  --theme-accent2: #94a3b8;
+  --theme-glow: rgba(226, 232, 240, 0.2);
+  --theme-border: rgba(255, 255, 255, 0.18);
+}
+
+/* Universal Reset & Performance */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-space);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Background Interactive Particle Canvas */
+#bg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Background Subtle Mesh / Vignette */
+.bg-vignette {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(7, 9, 14, 0.8) 95%);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* App Viewport Container */
+.viewport {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  perspective: 1200px;
+  overflow: hidden;
+  padding: 16px;
+}
+
+/* 3D Scene & Physics Rig */
+.card-scene {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+  perspective: 1400px;
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+
+.card-scene.grabbing {
+  cursor: grabbing;
+}
+
+/* The 3D Rigid Body Card */
+.card-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  transform-style: preserve-3d;
+  will-change: transform, box-shadow;
+  transform: rotateX(var(--rot-x)) rotateY(var(--rot-y)) translateZ(var(--trans-z));
+  box-shadow: 
+    var(--shadow-x) var(--shadow-y) var(--shadow-blur) rgba(0, 0, 0, 0.55),
+    0 0 60px var(--theme-glow);
+  transition: box-shadow 0.25s ease;
+}
+
+/* Card Faces (Double-Sided 3D Identity) */
+.card-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--card-radius);
+  background: linear-gradient(135deg, rgba(20, 24, 33, 0.88) 0%, rgba(11, 14, 20, 0.94) 100%);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Card Rim Bevel Highlight */
+.card-face::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  padding: 1.5px;
+  background: linear-gradient(
+    calc(var(--holo-angle) + 45deg),
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.05) 40%,
+    var(--theme-accent) 60%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Back Face Geometry */
+.card-face.card-back {
+  transform: rotateY(180deg) translateZ(1px);
+}
+
+/* Specular Glare Overlay */
+.card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: radial-gradient(
+    circle 340px at var(--light-x) var(--light-y),
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.12) 30%,
+    transparent 70%
+  );
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 8;
+  transform: translateZ(28px);
+}
+
+/* Holographic Prismatic Foil Sheen */
+.card-hologram {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--card-radius);
+  background: linear-gradient(
+    var(--holo-angle),
+    rgba(255, 0, 128, 0.16) 0%,
+    rgba(255, 165, 0, 0.20) 16%,
+    rgba(255, 255, 0, 0.22) 33%,
+    rgba(0, 255, 128, 0.22) 50%,
+    rgba(0, 191, 255, 0.20) 66%,
+    rgba(168, 85, 247, 0.22) 83%,
+    rgba(255, 0, 128, 0.16) 100%
+  );
+  background-position: var(--holo-x) var(--holo-y);
+  background-size: 200% 200%;
+  mix-blend-mode: color-dodge;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 7;
+  transform: translateZ(4px);
+}
+
+/* Cyber Matrix Background Texture inside card */
+.card-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 24px 24px, 48px 48px, 48px 48px;
+  opacity: 0.45;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ==========================================================================
+   Card Front Face Content & Spatial Parallax Layers
+   ========================================================================== */
+
+/* Top Status Bar */
+.card-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 5;
+  transform: translateZ(24px);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 5px 11px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #34d399;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+.status-beacon {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.status-beacon::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: #10b981;
+  opacity: 0.6;
+  animation: pulseBeacon 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseBeacon {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  50% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(0.9); opacity: 0; }
+}
+
+.pass-id-chip {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Avatar Showcase with High 3D Depth */
+.avatar-showcase {
+  position: relative;
+  align-self: center;
+  margin: 18px 0 14px 0;
+  width: 108px;
+  height: 108px;
+  z-index: 6;
+  transform: translateZ(44px);
+  will-change: transform;
+}
+
+.avatar-ring {
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: conic-gradient(from var(--holo-angle), var(--theme-accent), var(--theme-accent2), #ec4899, var(--theme-accent));
+  animation: rotateRing 8s linear infinite;
+  opacity: 0.85;
+  filter: blur(1.5px);
+}
+
+@keyframes rotateRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.avatar-image-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2.5px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  background: #0f172a;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatar-verified-badge {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent2));
+  border: 2px solid #0f172a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transform: translateZ(12px);
+}
+
+.avatar-verified-badge svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Profile Identity */
+.profile-meta {
+  text-align: center;
+  z-index: 6;
+  transform: translateZ(34px);
+  margin-bottom: 12px;
+}
+
+.profile-name {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  background: linear-gradient(135deg, #ffffff 40%, var(--theme-accent2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 4px;
+}
+
+.profile-role {
+  display: inline-block;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--theme-accent2);
+  letter-spacing: 0.2px;
+  margin-bottom: 8px;
+}
+
+.profile-bio {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--text-muted);
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+.profile-bio .highlight {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Social Action Pills Grid (Parallax layer 4) */
+.social-shelf {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: auto 0 14px 0;
+  z-index: 6;
+  transform: translateZ(42px);
+  flex-wrap: wrap;
+}
+
+.social-pill {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  text-decoration: none;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.social-pill svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.social-pill:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--theme-accent);
+  transform: translateZ(12px) scale(1.12);
+  box-shadow: 0 8px 20px var(--theme-glow);
+  color: #ffffff;
+}
+
+.social-pill:hover svg {
+  filter: drop-shadow(0 0 6px var(--theme-accent));
+}
+
+/* Card Bottom Action Bar */
+.card-bottom-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  z-index: 6;
+  transform: translateZ(26px);
+}
+
+.action-flip-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: var(--text-main);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-flip-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  border-color: var(--theme-accent);
+  box-shadow: 0 4px 14px var(--theme-glow);
+  transform: translateY(-1px);
+}
+
+.action-flip-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.4s ease;
+}
+
+.action-flip-btn:hover svg {
+  transform: rotate(180deg);
+}
+
+.action-copy-email {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.action-copy-email:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.action-copy-email svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* ==========================================================================
+   Card Back Face (VIP Pass / Tech Matrix / Contact vCard)
+   ========================================================================== */
+
+.back-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: 5;
+  transform: translateZ(24px);
+  margin-bottom: 12px;
+}
+
+.back-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.back-badge-title {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+
+.back-edition {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--theme-accent);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Dynamic QR Code Frame */
+.qr-hologram-box {
+  align-self: center;
+  margin: 10px 0 14px 0;
+  padding: 12px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  position: relative;
+  z-index: 6;
+  transform: translateZ(42px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-canvas-wrap {
+  width: 115px;
+  height: 115px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #ffffff;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-canvas-wrap img, .qr-canvas-wrap svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.qr-label {
+  margin-top: 8px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Skills Matrix Interactive Chips */
+.skills-matrix {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  justify-content: center;
+  z-index: 6;
+  transform: translateZ(32px);
+  margin-bottom: 12px;
+}
+
+.tech-chip {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  padding: 4.5px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  cursor: default;
+}
+
+.tech-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: var(--theme-accent);
+  color: #ffffff;
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 4px 12px var(--theme-glow);
+}
+
+/* Stats / Time Ticker */
+.system-telemetry {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-top: auto;
+  z-index: 6;
+  transform: translateZ(28px);
+}
+
+.telemetry-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.telemetry-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--text-dim);
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.telemetry-val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* Back Action Bar */
+.back-bottom-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 12px;
+  z-index: 6;
+  transform: translateZ(26px);
+}
+
+.btn-vcard {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: linear-gradient(135deg, var(--theme-accent), var(--theme-accent2));
+  border: none;
+  color: #ffffff;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 15px var(--theme-glow);
+  transition: all 0.2s ease;
+}
+
+.btn-vcard:hover {
+  transform: translateY(-1.5px) scale(1.03);
+  filter: brightness(1.15);
+}
+
+.btn-vcard svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ==========================================================================
+   Floating Glass HUD Dock (Controls at bottom)
+   ========================================================================== */
+
+.hud-dock {
+  position: fixed;
+  bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(15, 20, 28, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.hud-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.hud-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: var(--theme-accent);
+  transform: translateY(-2px);
+}
+
+.hud-btn.active {
+  color: var(--theme-accent);
+  border-color: var(--theme-accent);
+  background: rgba(168, 85, 247, 0.15);
+}
+
+.hud-btn svg {
+  width: 17px;
+  height: 17px;
+}
+
+.hud-divider {
+  width: 1px;
+  height: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 2px;
+}
+
+/* Theme Picker Swatches */
+.theme-swatch-list {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  background-size: cover;
+}
+
+.theme-swatch:hover {
+  transform: scale(1.22);
+}
+
+.theme-swatch.active {
+  border-color: #ffffff;
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Toast Notification */
+.toast-notice {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30px);
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(15, 20, 28, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--theme-accent);
+  color: #ffffff;
+  font-size: 12.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 100;
+}
+
+.toast-notice.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast-notice svg {
+  width: 15px;
+  height: 15px;
+  color: var(--theme-accent);
+}
+
+/* ==========================================================================
+   Mobile Responsive Adjustments
+   ========================================================================== */
+
+@media (max-width: 480px) {
+  :root {
+    --card-width: 92vw;
+    --card-height: 560px;
+    --card-radius: 24px;
+  }
+
+  .viewport {
+    padding: 12px;
+  }
+
+  .card-face {
+    padding: 18px;
+  }
+
+  .avatar-showcase {
+    width: 92px;
+    height: 92px;
+    margin: 12px 0 10px 0;
+  }
+
+  .profile-name {
+    font-size: 21px;
+  }
+
+  .profile-role {
+    font-size: 11.5px;
+  }
+
+  .profile-bio {
+    font-size: 11.5px;
+  }
+
+  .social-pill {
+    width: 40px;
+    height: 40px;
+  }
+
+  .qr-canvas-wrap {
+    width: 95px;
+    height: 95px;
+  }
+
+  .hud-dock {
+    bottom: 16px;
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .hud-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hud-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+}

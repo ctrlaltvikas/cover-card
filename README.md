@@ -1,79 +1,118 @@
-# Cover Card landing page theme
+# 🎴 Cover Card 3D — Next-Gen Holographic Spatial Profile
 
-## Quick set-up
+A mind-blowing, physics-driven, 3D holographic personal cover card built with modern web technologies, spatial UI/UX design, real-time spring dynamics, and Web Audio synthesis. Fully responsive across desktop, tablet, and mobile with native gyroscope spatial tracking.
 
-1. [Use this template](https://github.com/epidrome/cover-card/generate)
-2. Edit the `_config.yml` with your online presence accounts and upload a background and an avatar image
-3. Go to the `Settings` tab, then select `Pages` from the sidebar, and find (gh-pages branch) your new home page link
+![Cover Card 3D Preview](avatar.jpg)
 
-## Dependencies
+---
 
-This theme is based on [jekyll](https://jekyllrb.com/) and [jekyll-remote-theme](https://github.com/benbalter/jekyll-remote-theme). These dependencies are natively supported by [Github Pages](https://pages.github.com/), which should build and deploy your site as soon as you make any change to your files. The theme is also based on the icons from [Font Awesome](https://fontawesome.com/). 
+## ✨ Features That Blow Minds
 
-## Motivation
+### 1. 🧲 Real-Time Rigid-Body Physics & Spring Dynamics
+- **Damped Harmonic Spring Mechanics**: Card rotation and elevation respond with realistic mass, velocity, momentum, and smooth friction damping.
+- **Zero-Gravity Idle Levitation**: When untouched, the card floats in zero-gravity with a gentle dual-harmonic Lissajous 3D orbit.
+- **Dynamic 3D Cast Shadow**: Shadows dynamically extend, soften, and shift based on the card's 3D pitch and elevation.
 
-Create a cover page for your social media profiles, host it for free on Github Pages, and maintain it in minutes, not hours. 
+### 2. 🌈 Holographic Iridescent Foil & Specular Lighting
+- **Prismatic Diffraction Grating**: Real-time holographic rainbow foil sheen that shifts color spectra based on rotation angles.
+- **Dynamic Raycast Specular Glare**: Concentrated surface glare glints across the frosted glass as you tilt the card.
+- **Edge Bevel & Rim Illumination**: 3D extruded rim highlight creates tangible physical credit-card / VIP badge depth.
 
-I understand that a jekyll theme without a blog might sound like a self contradiction, but jekyll has also motivated something even more useful than itself: seamless hosting with Github Pages. 
+### 3. 🪐 Multi-Plane Spatial Parallax ("Deep Glass")
+- The card is not flat! Elements float on discrete Z-planes:
+  - **Z: 44px** — Floating Avatar with continuous conic chromatic glow ring.
+  - **Z: 42px** — Social action pills with magnetic hover elevation.
+  - **Z: 34px** — Name, title badge, and profile metadata.
+  - **Z: 24px** — Live status indicator beacon.
+  - **Z: 0px** — Frosted glass base (`backdrop-filter: blur(24px)`).
 
-This theme takes advantage of both jekyll and Github Pages, in order to create something similar to [linktree](https://linktr.ee), [about.me](https://about.me/) and [carrd](https://carrd.co), but without the price tag.
+### 4. 🔄 Double-Sided 3D Card Flip (VIP Developer Pass)
+- Flip the card with the **Flip Pass** button, floating HUD icon, or keyboard shortcut (`Space` / `F`).
+- **Back Side — High-Tech VIP Pass**:
+  - Embedded dynamic scannable QR code.
+  - Interactive skill chips with 3D levitation.
+  - Real-time local clock and telemetry status.
+  - One-click **Save Contact (vCard .vcf)** download.
 
-In addition to the official demo link, here is one more [demo from my home page](https://github.com/epidrome/home).
+### 5. 🌌 Interactive Particle Cosmos Background
+- 60–120 FPS high-performance 2D/3D Canvas particle constellation.
+- **Gravitational Repulsion**: Stars and dust gently scatter away from your cursor.
+- **Camera Parallax**: The entire background constellation shifts in 3D opposite to card tilt for deep spatial immersion.
 
-This theme is ideal for people or organizations who are busy enjoying their life or business and who want a simple business card for their online presence.
+### 6. 🔊 Web Audio API Synthesizer
+- 100% synthetic sound design — zero audio files to download!
+- Smooth glass ticks, air-displacement flip whooshes, and harmonic chord chimes for theme switches.
+- Toggle mute anytime with the floating HUD button or press `M`.
 
-Please keep this README file because it contains the credits at the end and it might become handy after you have completely forgoten the set-up instructions.
+### 7. 📱 Mobile Gyroscope & Touch Gestures
+- **Physical Gyroscope Tracking**: Tilt your phone in physical space to rotate the 3D card!
+- **Smooth Touch Drag & Inertia**: Drag with single finger to examine the card in 3D.
+- Auto-responsive layout tailored for screens from iPhone SE up to ultra-wide 4K displays.
 
-## Design rationale
+### 8. 🎨 4 Dynamic Color Themes
+- **Cyber Prism**: Holographic neon violet, cyan, and magenta.
+- **Solaris Gold**: Obsidian, amber, and titanium champagne gold.
+- **Arctic Aurora**: Deep emerald, arctic teal, and cyan borealis.
+- **Obsidian Stealth**: Midnight dark mode with diamond silver accents.
 
-The design rationale of this theme is to do less than other themes: "Less is more"
+---
 
-The majority (99%) of the availabe jekyll themes offers a blog, but I have never been able to keep blog content (or its technology) updated over time.
+## ⚡ Keyboard Shortcuts
 
-Let's be honest with ourselves: How does an (abandoned) blog centered web site look to new visitors if we have not posted since two years ago?
+| Key | Action |
+| :--- | :--- |
+| <kbd>Space</kbd> or <kbd>F</kbd> | Flip between Front and Back face |
+| <kbd>T</kbd> | Cycle through Color Themes |
+| <kbd>M</kbd> | Toggle Sound Effects (Mute / Unmute) |
 
-## Make it yours
+---
 
-[Fork this repository](https://github.com/epidrome/cover-card/fork) and edit the files to your liking: As a first step, you may want to replace the images and edit the `_config.yml` with your online profiles. You can test the result almost in real-time at the `Github Pages` section in the Settings tab (gh-pages branch).
+## 🛠️ Quick Customization
 
-### Avatar or Logo
+All your profile details, socials, skills, and physics tuning are organized in [`js/config.js`](js/config.js):
 
-The avatar image should be square and at least 200 pixels. Chances are that you have a selfie somewhere in your media storage. If you are making a page for a business or product, then use a logo.
+```javascript
+window.CARD_CONFIG = {
+  profile: {
+    name: "Vikas Kumar Yadav",
+    role: "Creative Technologist & Full-Stack Engineer",
+    avatar: "avatar.jpg",
+    bio: "Crafting mind-bending digital experiences...",
+    passId: "CC-VK-9021"
+  },
+  socials: [
+    { name: "GitHub", url: "https://github.com/ctrlaltvikas", icon: "github" },
+    { name: "LinkedIn", url: "https://linkedin.com/in/ctrlaltvikas", icon: "linkedin" },
+    { name: "Email", url: "mailto:vikasharry03@gmail.com", icon: "email", isEmail: true }
+  ],
+  skills: [
+    { name: "Three.js & WebGL", level: "Advanced" },
+    { name: "Physics & Shaders", level: "Advanced" },
+    { name: "React / Next.js", level: "Expert" }
+  ]
+};
+```
 
-### Background image sets the mood
+To replace the avatar, simply overwrite [`avatar.jpg`](avatar.jpg) or specify any image URL in `config.js`.
 
-There is no aspect ratio requirement for the background image, but it should be big enough for contemporary (desktop, tablet, phone) computer displays and dark enough in order to work for the white foreground text and icons.
+---
 
-### Social profiles
+## 🚀 Deployment (GitHub Pages)
 
-Edit the `_config.yml` file with your social media profiles by adding the respective account name, according to the documentation and comments inside that file. You can delete or comment out the social media that you don't need. Since v04, you can also control the order of your social media accounts. Moreover, you can add new media accounts and choose the icon.
+This project is 100% static and requires zero build steps or gem installations.
 
-### Domain name
+1. Push your changes to the `gh-pages` branch (or `main` / `master`):
+   ```bash
+   git add .
+   git commit -m "Revamp cover-card with 3D physics holographic experience"
+   git push origin gh-pages
+   ```
+2. In GitHub, navigate to **Settings > Pages**.
+3. Under **Build and deployment**, select **Deploy from a branch** and choose your branch.
+4. Your site will be live instantly!
 
-Github Pages supports free custom domain names, so it is worth buying a domain name and fill it in `Custom domain` field at the settings. If you want to use the theme with you user page (ie. username.github.io), then delete (or rename) your `master branch` and rename your `gh-branch` to `master` [#13](https://github.com/epidrome/cover-card/issues/13)
+---
 
-### Working example
+## 📄 License
 
-In addition to the configuration file in this repository, you can also [inspect a modified example of the legacy configuration file](https://github.com/epidrome/home/tree/0f333b28688a7a2e5eb84df768c277a03848d228), which is using the *legacy version* of the theme. Moreover, you can inspect a [custom (icons, links) example of the *current version*](https://github.com/epidrome/home).
-
-### Updates
-
-Please note that the theme is currently in beta, so some updates at the [master branch](https://github.com/epidrome/cover-card/tree/master) might break your site. Don't panic! 
-
-If you wish to keep your theme frozen and not receive updates, then you can [revert your remote_theme to the last known good configuration](https://github.com/benbalter/jekyll-remote-theme):
-
-> You may also optionally specify a branch, tag, or commit to use by appending an @ and the Git ref (e.g., epidrome/cover-card@v0.3). If you don't specify a Git ref, the master branch will be used.
-
-Please note that currently Github Pages seems to build your site only when you make a local change. This means that the theme might get updated but you will not receive the updated version unless you make a local change in your forked repository.
-
-You can always visit [releases](https://github.com/epidrome/cover-card/releases) for new features and check [issues](https://github.com/epidrome/cover-card/issues) for major bugs.
-
-### Expert options
-
-You can find and locally overide advanced options (e.g., font, image, and icon styles) for this theme in the documentation (readme) at the [master branch](https://github.com/epidrome/cover-card/tree/master).
-
-## Credits
-
-This page is based on the [cover-card jekyll remote theme](https://github.com/epidrome/cover-card/tree/master).
-
-Background photo by Anders Jildén and avatar photo by Ayo Ogunseinde, both on [Unsplash](https://unsplash.com/)
+MIT © [Vikas Kumar Yadav](https://github.com/ctrlaltvikas)
