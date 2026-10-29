@@ -79,6 +79,21 @@
       const backEdition = document.getElementById('back-edition');
       if (backEdition) backEdition.textContent = p.edition || 'VIP SPEC 2026';
 
+      const statusBadgeText = document.querySelector('.card-front .status-badge span:last-child');
+      if (statusBadgeText && p.status) {
+        statusBadgeText.textContent = p.status;
+      }
+
+      // Telemetry Stats Hydration
+      if (config.stats) {
+        config.stats.forEach(st => {
+          if (st.id) {
+            const el = document.getElementById(st.id);
+            if (el) el.textContent = st.value;
+          }
+        });
+      }
+
       // 3. Social Shelf Rendering
       const socialShelf = document.getElementById('social-shelf');
       if (socialShelf && config.socials) {

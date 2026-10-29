@@ -1,23 +1,23 @@
 /**
  * Cover Card 3D - Configuration
- * Edit this file to easily customize your 3D card profile, links, and themes.
+ * Powered by profile data from github.com/ctrlaltvikas
  */
 
 window.CARD_CONFIG = {
   profile: {
     name: "Vikas Kumar Yadav",
     handle: "@ctrlaltvikas",
-    badge: "PRO DEV",
-    role: "Creative Technologist & Full-Stack Engineer",
-    status: "Available for Visionary Projects",
+    badge: "GOVT OFFICER",
+    role: "Govt Officer | Digital Transformation Strategist",
+    status: "Digital Strategy & Innovation (NABARD)",
     statusActive: true,
-    avatar: "avatar.jpg",
-    avatarFallback: "https://avatars.githubusercontent.com/u/12607959?v=4",
-    location: "Global / Remote",
-    bio: "Crafting mind-bending digital experiences at the nexus of <span class='highlight'>interactive 3D physics</span>, <span class='highlight'>spatial UI/UX</span>, and <span class='highlight'>high-performance code</span>.",
-    passId: "CC-VK-9021",
-    edition: "HOLOGRAM EDITION 2026",
-    quote: "Simplicity is the ultimate sophistication in physics and code."
+    avatar: "https://avatars.githubusercontent.com/u/12607959?v=4",
+    avatarFallback: "avatar.jpg",
+    location: "Mumbai / Global",
+    bio: "Govt officer & Digital Transformation Strategist (NABARD). Ex-PwC, Ex-Microsoft. Creator of <span class='highlight'>Awesome-Bash-Aliases</span> and <span class='highlight'>Indian-government-API-List</span>.",
+    passId: "CC-VK-9YRS",
+    edition: "DIGITAL STRATEGY PASS 2026",
+    quote: "Democratizing digital public infrastructure with open architecture and terminal efficiency."
   },
 
   socials: [
@@ -59,21 +59,22 @@ window.CARD_CONFIG = {
     }
   ],
 
+  // Skills tailored to Vikas Kumar Yadav's background (Ex-MSFT, Ex-PwC, NABARD, Open Source)
   skills: [
-    { name: "Three.js & WebGL", level: "Advanced" },
-    { name: "Physics & Shaders", level: "Advanced" },
-    { name: "React / Next.js", level: "Expert" },
-    { name: "Spatial UI / UX", level: "Expert" },
-    { name: "TypeScript", level: "Advanced" },
-    { name: "Node.js & APIs", level: "Advanced" },
-    { name: "Creative Coding", level: "Expert" },
-    { name: "Web Audio & Haptics", level: "Pro" }
+    { name: "Digital Transformation", level: "Expert" },
+    { name: "Enterprise Architecture", level: "Expert" },
+    { name: "GovTech & DPI APIs", level: "Expert" },
+    { name: "Cloud & DevOps (Ex-MSFT)", level: "Advanced" },
+    { name: "Linux & Bash Automation", level: "Master" },
+    { name: "Data Strategy & Governance", level: "Advanced" },
+    { name: "Full-Stack & Python", level: "Advanced" },
+    { name: "Systems Security & Advisory", level: "Senior" }
   ],
 
   stats: [
-    { label: "EXPERIENCE", value: "7+ Yrs" },
-    { label: "FOCUS", value: "3D & Systems" },
-    { label: "SECURITY", value: "CLASS A" }
+    { label: "EXPERIENCE", value: "9+ Yrs", id: "stat-experience" },
+    { label: "DOMAIN", value: "GovTech & DPI", id: "stat-domain" },
+    { label: "SECURITY", value: "CLASS A", id: "stat-security" }
   ],
 
   themes: [
